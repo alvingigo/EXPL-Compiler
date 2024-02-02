@@ -3,7 +3,7 @@
     #include <stdio.h>
     int yylex(void);
     int yyerror();
-   // int valid=1;
+    int valid=1;
 
 %}
 
@@ -12,7 +12,7 @@
 %%
 start : CHAR s
 s : CHAR s
-    |DIGIT s
+    |DIGIT
     |
     ;
 
@@ -20,14 +20,14 @@ s : CHAR s
 
 int yyerror(){
     printf("It is not an Identifier \n");
-    //valid=0;
+    valid=0;
     return 1;
 }
 
 int main() {
     printf("\nEnter:");
     yyparse();
-    if(!yyerror()) {
+    if(valid) {
         printf("\nIt is a identifier!\n");
     }
 }

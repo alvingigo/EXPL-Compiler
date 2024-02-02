@@ -1,7 +1,7 @@
 %option noyywrap
 
 %{
-    #include "y.tab.c"
+    #include "y.tab.h"
 
 %}
 
