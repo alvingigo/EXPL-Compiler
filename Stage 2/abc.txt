@@ -1,0 +1,7 @@
+begin
+read(a);
+read(b);
+a=b+2;
+write(a);
+write(b+5);
+end;
