@@ -1,0 +1,18 @@
+decl
+	int temp1, temp2, i;
+	str s1[5], s2, s3;
+enddecl;
+begin
+i = 0;
+
+while(i < 5) do
+	s1[i] = "Hello@13$#*&()";
+	i = i + 1;
+endwh ile;
+
+i = 0;
+while(i < 5) do
+	write(s1[i]);
+	i = i + 1;
+endwhile;
+end;

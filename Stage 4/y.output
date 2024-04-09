@@ -1,0 +1,1616 @@
+State 61 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: DeclareStmt START Slist END ';'
+    2        | DeclareStmt START END ';'
+
+    3 DeclareStmt: DECL DeclList ENDDECL ';'
+    4            | DECL ENDDECL ';'
+
+    5 DeclList: DeclList Decl
+    6         | Decl
+
+    7 Decl: Type VarList ';'
+
+    8 Type: INT
+    9     | STR
+
+   10 VarList: VarList ',' VarList
+   11        | VAR '[' NUM ']'
+   12        | VAR
+
+   13 Slist: Slist Stmt
+   14      | Stmt
+
+   15 Stmt: InputStmt
+   16     | OutputStmt
+   17     | AsgStmt
+   18     | Ifstmt
+   19     | Whilestmt
+   20     | Breakstmt
+   21     | Contstmt
+
+   22 InputStmt: READ '(' id ')' ';'
+
+   23 OutputStmt: WRITE '(' expr ')' ';'
+
+   24 AsgStmt: id ASSIGN expr ';'
+
+   25 Ifstmt: IF '(' expr ')' THEN Slist ELSE Slist ENDIF ';'
+   26       | IF '(' expr ')' THEN Slist ENDIF ';'
+
+   27 Whilestmt: WHILE '(' expr ')' DO Slist ENDWHILE ';'
+   28          | DO Slist WHILE '(' expr ')' ENDWHILE ';'
+
+   29 Breakstmt: BREAK ';'
+
+   30 Contstmt: CONTINUE ';'
+
+   31 expr: expr PLUS expr
+   32     | expr MINUS expr
+   33     | expr MUL expr
+   34     | expr DIV expr
+   35     | expr LT expr
+   36     | expr GT expr
+   37     | expr EQ expr
+   38     | expr NEQ expr
+   39     | expr GE expr
+   40     | expr LE expr
+   41     | '(' expr ')'
+   42     | NUM
+   43     | id
+   44     | STRVAL
+
+   45 id: VAR
+   46   | VAR '[' expr ']'
+   47   | VAR '[' id ']'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 22 23 25 26 27 28 41
+')' (41) 22 23 25 26 27 28 41
+',' (44) 10
+';' (59) 1 2 3 4 7 22 23 24 25 26 27 28 29 30
+'[' (91) 11 46 47
+']' (93) 11 46 47
+error (256)
+PLUS (258) 31
+MINUS (259) 32
+MUL (260) 33
+DIV (261) 34
+START (262) 1 2
+END (263) 1 2
+READ (264) 22
+WRITE (265) 23
+VAR (266) 11 12 45 46 47
+STRVAL (267) 44
+NUM (268) 11 42
+ASSIGN (269) 24
+IF (270) 25 26
+ELSE (271) 25
+WHILE (272) 27 28
+THEN (273) 25 26
+ENDIF (274) 25 26
+ENDWHILE (275) 27 28
+DO (276) 27 28
+BREAK (277) 29
+CONTINUE (278) 30
+LT (279) 35
+GT (280) 36
+LE (281) 40
+GE (282) 39
+EQ (283) 37
+NEQ (284) 38
+DECL (285) 3 4
+ENDDECL (286) 3 4
+INT (287) 8
+STR (288) 9
+
+
+Nonterminals, with rules where they appear
+
+$accept (40)
+    on left: 0
+program (41)
+    on left: 1 2, on right: 0
+DeclareStmt (42)
+    on left: 3 4, on right: 1 2
+DeclList (43)
+    on left: 5 6, on right: 3 5
+Decl (44)
+    on left: 7, on right: 5 6
+Type (45)
+    on left: 8 9, on right: 7
+VarList (46)
+    on left: 10 11 12, on right: 7 10
+Slist (47)
+    on left: 13 14, on right: 1 13 25 26 27 28
+Stmt (48)
+    on left: 15 16 17 18 19 20 21, on right: 13 14
+InputStmt (49)
+    on left: 22, on right: 15
+OutputStmt (50)
+    on left: 23, on right: 16
+AsgStmt (51)
+    on left: 24, on right: 17
+Ifstmt (52)
+    on left: 25 26, on right: 18
+Whilestmt (53)
+    on left: 27 28, on right: 19
+Breakstmt (54)
+    on left: 29, on right: 20
+Contstmt (55)
+    on left: 30, on right: 21
+expr (56)
+    on left: 31 32 33 34 35 36 37 38 39 40 41 42 43 44,
+    on right: 23 24 25 26 27 28 31 32 33 34 35 36 37 38 39 40 41 46
+id (57)
+    on left: 45 46 47, on right: 22 24 43 47
+
+
+state 0
+
+    0 $accept: . program $end
+
+    DECL  shift, and go to state 1
+
+    program      go to state 2
+    DeclareStmt  go to state 3
+
+
+state 1
+
+    3 DeclareStmt: DECL . DeclList ENDDECL ';'
+    4            | DECL . ENDDECL ';'
+
+    ENDDECL  shift, and go to state 4
+    INT      shift, and go to state 5
+    STR      shift, and go to state 6
+
+    DeclList  go to state 7
+    Decl      go to state 8
+    Type      go to state 9
+
+
+state 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 10
+
+
+state 3
+
+    1 program: DeclareStmt . START Slist END ';'
+    2        | DeclareStmt . START END ';'
+
+    START  shift, and go to state 11
+
+
+state 4
+
+    4 DeclareStmt: DECL ENDDECL . ';'
+
+    ';'  shift, and go to state 12
+
+
+state 5
+
+    8 Type: INT .
+
+    $default  reduce using rule 8 (Type)
+
+
+state 6
+
+    9 Type: STR .
+
+    $default  reduce using rule 9 (Type)
+
+
+state 7
+
+    3 DeclareStmt: DECL DeclList . ENDDECL ';'
+    5 DeclList: DeclList . Decl
+
+    ENDDECL  shift, and go to state 13
+    INT      shift, and go to state 5
+    STR      shift, and go to state 6
+
+    Decl  go to state 14
+    Type  go to state 9
+
+
+state 8
+
+    6 DeclList: Decl .
+
+    $default  reduce using rule 6 (DeclList)
+
+
+state 9
+
+    7 Decl: Type . VarList ';'
+
+    VAR  shift, and go to state 15
+
+    VarList  go to state 16
+
+
+state 10
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 11
+
+    1 program: DeclareStmt START . Slist END ';'
+    2        | DeclareStmt START . END ';'
+
+    END       shift, and go to state 17
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 22
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Slist       go to state 26
+    Stmt        go to state 27
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 12
+
+    4 DeclareStmt: DECL ENDDECL ';' .
+
+    $default  reduce using rule 4 (DeclareStmt)
+
+
+state 13
+
+    3 DeclareStmt: DECL DeclList ENDDECL . ';'
+
+    ';'  shift, and go to state 36
+
+
+state 14
+
+    5 DeclList: DeclList Decl .
+
+    $default  reduce using rule 5 (DeclList)
+
+
+state 15
+
+   11 VarList: VAR . '[' NUM ']'
+   12        | VAR .
+
+    '['  shift, and go to state 37
+
+    $default  reduce using rule 12 (VarList)
+
+
+state 16
+
+    7 Decl: Type VarList . ';'
+   10 VarList: VarList . ',' VarList
+
+    ','  shift, and go to state 38
+    ';'  shift, and go to state 39
+
+
+state 17
+
+    2 program: DeclareStmt START END . ';'
+
+    ';'  shift, and go to state 40
+
+
+state 18
+
+   22 InputStmt: READ . '(' id ')' ';'
+
+    '('  shift, and go to state 41
+
+
+state 19
+
+   23 OutputStmt: WRITE . '(' expr ')' ';'
+
+    '('  shift, and go to state 42
+
+
+state 20
+
+   45 id: VAR .
+   46   | VAR . '[' expr ']'
+   47   | VAR . '[' id ']'
+
+    '['  shift, and go to state 43
+
+    $default  reduce using rule 45 (id)
+
+
+state 21
+
+   25 Ifstmt: IF . '(' expr ')' THEN Slist ELSE Slist ENDIF ';'
+   26       | IF . '(' expr ')' THEN Slist ENDIF ';'
+
+    '('  shift, and go to state 44
+
+
+state 22
+
+   27 Whilestmt: WHILE . '(' expr ')' DO Slist ENDWHILE ';'
+
+    '('  shift, and go to state 45
+
+
+state 23
+
+   28 Whilestmt: DO . Slist WHILE '(' expr ')' ENDWHILE ';'
+
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 22
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Slist       go to state 46
+    Stmt        go to state 27
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 24
+
+   29 Breakstmt: BREAK . ';'
+
+    ';'  shift, and go to state 47
+
+
+state 25
+
+   30 Contstmt: CONTINUE . ';'
+
+    ';'  shift, and go to state 48
+
+
+state 26
+
+    1 program: DeclareStmt START Slist . END ';'
+   13 Slist: Slist . Stmt
+
+    END       shift, and go to state 49
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 22
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Stmt        go to state 50
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 27
+
+   14 Slist: Stmt .
+
+    $default  reduce using rule 14 (Slist)
+
+
+state 28
+
+   15 Stmt: InputStmt .
+
+    $default  reduce using rule 15 (Stmt)
+
+
+state 29
+
+   16 Stmt: OutputStmt .
+
+    $default  reduce using rule 16 (Stmt)
+
+
+state 30
+
+   17 Stmt: AsgStmt .
+
+    $default  reduce using rule 17 (Stmt)
+
+
+state 31
+
+   18 Stmt: Ifstmt .
+
+    $default  reduce using rule 18 (Stmt)
+
+
+state 32
+
+   19 Stmt: Whilestmt .
+
+    $default  reduce using rule 19 (Stmt)
+
+
+state 33
+
+   20 Stmt: Breakstmt .
+
+    $default  reduce using rule 20 (Stmt)
+
+
+state 34
+
+   21 Stmt: Contstmt .
+
+    $default  reduce using rule 21 (Stmt)
+
+
+state 35
+
+   24 AsgStmt: id . ASSIGN expr ';'
+
+    ASSIGN  shift, and go to state 51
+
+
+state 36
+
+    3 DeclareStmt: DECL DeclList ENDDECL ';' .
+
+    $default  reduce using rule 3 (DeclareStmt)
+
+
+state 37
+
+   11 VarList: VAR '[' . NUM ']'
+
+    NUM  shift, and go to state 52
+
+
+state 38
+
+   10 VarList: VarList ',' . VarList
+
+    VAR  shift, and go to state 15
+
+    VarList  go to state 53
+
+
+state 39
+
+    7 Decl: Type VarList ';' .
+
+    $default  reduce using rule 7 (Decl)
+
+
+state 40
+
+    2 program: DeclareStmt START END ';' .
+
+    $default  reduce using rule 2 (program)
+
+
+state 41
+
+   22 InputStmt: READ '(' . id ')' ';'
+
+    VAR  shift, and go to state 20
+
+    id  go to state 54
+
+
+state 42
+
+   23 OutputStmt: WRITE '(' . expr ')' ';'
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 58
+    id    go to state 59
+
+
+state 43
+
+   46 id: VAR '[' . expr ']'
+   47   | VAR '[' . id ']'
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 60
+    id    go to state 61
+
+
+state 44
+
+   25 Ifstmt: IF '(' . expr ')' THEN Slist ELSE Slist ENDIF ';'
+   26       | IF '(' . expr ')' THEN Slist ENDIF ';'
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 62
+    id    go to state 59
+
+
+state 45
+
+   27 Whilestmt: WHILE '(' . expr ')' DO Slist ENDWHILE ';'
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 63
+    id    go to state 59
+
+
+state 46
+
+   13 Slist: Slist . Stmt
+   28 Whilestmt: DO Slist . WHILE '(' expr ')' ENDWHILE ';'
+
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 64
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Stmt        go to state 50
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 47
+
+   29 Breakstmt: BREAK ';' .
+
+    $default  reduce using rule 29 (Breakstmt)
+
+
+state 48
+
+   30 Contstmt: CONTINUE ';' .
+
+    $default  reduce using rule 30 (Contstmt)
+
+
+state 49
+
+    1 program: DeclareStmt START Slist END . ';'
+
+    ';'  shift, and go to state 65
+
+
+state 50
+
+   13 Slist: Slist Stmt .
+
+    $default  reduce using rule 13 (Slist)
+
+
+state 51
+
+   24 AsgStmt: id ASSIGN . expr ';'
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 66
+    id    go to state 59
+
+
+state 52
+
+   11 VarList: VAR '[' NUM . ']'
+
+    ']'  shift, and go to state 67
+
+
+state 53
+
+   10 VarList: VarList . ',' VarList
+   10        | VarList ',' VarList .
+
+    ','  shift, and go to state 38
+
+    $default  reduce using rule 10 (VarList)
+
+
+state 54
+
+   22 InputStmt: READ '(' id . ')' ';'
+
+    ')'  shift, and go to state 68
+
+
+state 55
+
+   44 expr: STRVAL .
+
+    $default  reduce using rule 44 (expr)
+
+
+state 56
+
+   42 expr: NUM .
+
+    $default  reduce using rule 42 (expr)
+
+
+state 57
+
+   41 expr: '(' . expr ')'
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 69
+    id    go to state 59
+
+
+state 58
+
+   23 OutputStmt: WRITE '(' expr . ')' ';'
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    PLUS   shift, and go to state 70
+    MINUS  shift, and go to state 71
+    MUL    shift, and go to state 72
+    DIV    shift, and go to state 73
+    LT     shift, and go to state 74
+    GT     shift, and go to state 75
+    LE     shift, and go to state 76
+    GE     shift, and go to state 77
+    EQ     shift, and go to state 78
+    NEQ    shift, and go to state 79
+    ')'    shift, and go to state 80
+
+
+state 59
+
+   43 expr: id .
+
+    $default  reduce using rule 43 (expr)
+
+
+state 60
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+   46 id: VAR '[' expr . ']'
+
+    PLUS   shift, and go to state 70
+    MINUS  shift, and go to state 71
+    MUL    shift, and go to state 72
+    DIV    shift, and go to state 73
+    LT     shift, and go to state 74
+    GT     shift, and go to state 75
+    LE     shift, and go to state 76
+    GE     shift, and go to state 77
+    EQ     shift, and go to state 78
+    NEQ    shift, and go to state 79
+    ']'    shift, and go to state 81
+
+
+state 61
+
+   43 expr: id .
+   47 id: VAR '[' id . ']'
+
+    ']'  shift, and go to state 82
+
+    ']'       [reduce using rule 43 (expr)]
+    $default  reduce using rule 43 (expr)
+
+
+state 62
+
+   25 Ifstmt: IF '(' expr . ')' THEN Slist ELSE Slist ENDIF ';'
+   26       | IF '(' expr . ')' THEN Slist ENDIF ';'
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    PLUS   shift, and go to state 70
+    MINUS  shift, and go to state 71
+    MUL    shift, and go to state 72
+    DIV    shift, and go to state 73
+    LT     shift, and go to state 74
+    GT     shift, and go to state 75
+    LE     shift, and go to state 76
+    GE     shift, and go to state 77
+    EQ     shift, and go to state 78
+    NEQ    shift, and go to state 79
+    ')'    shift, and go to state 83
+
+
+state 63
+
+   27 Whilestmt: WHILE '(' expr . ')' DO Slist ENDWHILE ';'
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    PLUS   shift, and go to state 70
+    MINUS  shift, and go to state 71
+    MUL    shift, and go to state 72
+    DIV    shift, and go to state 73
+    LT     shift, and go to state 74
+    GT     shift, and go to state 75
+    LE     shift, and go to state 76
+    GE     shift, and go to state 77
+    EQ     shift, and go to state 78
+    NEQ    shift, and go to state 79
+    ')'    shift, and go to state 84
+
+
+state 64
+
+   27 Whilestmt: WHILE . '(' expr ')' DO Slist ENDWHILE ';'
+   28          | DO Slist WHILE . '(' expr ')' ENDWHILE ';'
+
+    '('  shift, and go to state 85
+
+
+state 65
+
+    1 program: DeclareStmt START Slist END ';' .
+
+    $default  reduce using rule 1 (program)
+
+
+state 66
+
+   24 AsgStmt: id ASSIGN expr . ';'
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    PLUS   shift, and go to state 70
+    MINUS  shift, and go to state 71
+    MUL    shift, and go to state 72
+    DIV    shift, and go to state 73
+    LT     shift, and go to state 74
+    GT     shift, and go to state 75
+    LE     shift, and go to state 76
+    GE     shift, and go to state 77
+    EQ     shift, and go to state 78
+    NEQ    shift, and go to state 79
+    ';'    shift, and go to state 86
+
+
+state 67
+
+   11 VarList: VAR '[' NUM ']' .
+
+    $default  reduce using rule 11 (VarList)
+
+
+state 68
+
+   22 InputStmt: READ '(' id ')' . ';'
+
+    ';'  shift, and go to state 87
+
+
+state 69
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+   41     | '(' expr . ')'
+
+    PLUS   shift, and go to state 70
+    MINUS  shift, and go to state 71
+    MUL    shift, and go to state 72
+    DIV    shift, and go to state 73
+    LT     shift, and go to state 74
+    GT     shift, and go to state 75
+    LE     shift, and go to state 76
+    GE     shift, and go to state 77
+    EQ     shift, and go to state 78
+    NEQ    shift, and go to state 79
+    ')'    shift, and go to state 88
+
+
+state 70
+
+   31 expr: expr PLUS . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 89
+    id    go to state 59
+
+
+state 71
+
+   32 expr: expr MINUS . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 90
+    id    go to state 59
+
+
+state 72
+
+   33 expr: expr MUL . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 91
+    id    go to state 59
+
+
+state 73
+
+   34 expr: expr DIV . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 92
+    id    go to state 59
+
+
+state 74
+
+   35 expr: expr LT . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 93
+    id    go to state 59
+
+
+state 75
+
+   36 expr: expr GT . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 94
+    id    go to state 59
+
+
+state 76
+
+   40 expr: expr LE . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 95
+    id    go to state 59
+
+
+state 77
+
+   39 expr: expr GE . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 96
+    id    go to state 59
+
+
+state 78
+
+   37 expr: expr EQ . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 97
+    id    go to state 59
+
+
+state 79
+
+   38 expr: expr NEQ . expr
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 98
+    id    go to state 59
+
+
+state 80
+
+   23 OutputStmt: WRITE '(' expr ')' . ';'
+
+    ';'  shift, and go to state 99
+
+
+state 81
+
+   46 id: VAR '[' expr ']' .
+
+    $default  reduce using rule 46 (id)
+
+
+state 82
+
+   47 id: VAR '[' id ']' .
+
+    $default  reduce using rule 47 (id)
+
+
+state 83
+
+   25 Ifstmt: IF '(' expr ')' . THEN Slist ELSE Slist ENDIF ';'
+   26       | IF '(' expr ')' . THEN Slist ENDIF ';'
+
+    THEN  shift, and go to state 100
+
+
+state 84
+
+   27 Whilestmt: WHILE '(' expr ')' . DO Slist ENDWHILE ';'
+
+    DO  shift, and go to state 101
+
+
+state 85
+
+   27 Whilestmt: WHILE '(' . expr ')' DO Slist ENDWHILE ';'
+   28          | DO Slist WHILE '(' . expr ')' ENDWHILE ';'
+
+    VAR     shift, and go to state 20
+    STRVAL  shift, and go to state 55
+    NUM     shift, and go to state 56
+    '('     shift, and go to state 57
+
+    expr  go to state 102
+    id    go to state 59
+
+
+state 86
+
+   24 AsgStmt: id ASSIGN expr ';' .
+
+    $default  reduce using rule 24 (AsgStmt)
+
+
+state 87
+
+   22 InputStmt: READ '(' id ')' ';' .
+
+    $default  reduce using rule 22 (InputStmt)
+
+
+state 88
+
+   41 expr: '(' expr ')' .
+
+    $default  reduce using rule 41 (expr)
+
+
+state 89
+
+   31 expr: expr . PLUS expr
+   31     | expr PLUS expr .
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    MUL  shift, and go to state 72
+    DIV  shift, and go to state 73
+    LT   shift, and go to state 74
+    GT   shift, and go to state 75
+    LE   shift, and go to state 76
+    GE   shift, and go to state 77
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    $default  reduce using rule 31 (expr)
+
+
+state 90
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   32     | expr MINUS expr .
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    MUL  shift, and go to state 72
+    DIV  shift, and go to state 73
+    LT   shift, and go to state 74
+    GT   shift, and go to state 75
+    LE   shift, and go to state 76
+    GE   shift, and go to state 77
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    $default  reduce using rule 32 (expr)
+
+
+state 91
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   33     | expr MUL expr .
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    LT   shift, and go to state 74
+    GT   shift, and go to state 75
+    LE   shift, and go to state 76
+    GE   shift, and go to state 77
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    $default  reduce using rule 33 (expr)
+
+
+state 92
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   34     | expr DIV expr .
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    LT   shift, and go to state 74
+    GT   shift, and go to state 75
+    LE   shift, and go to state 76
+    GE   shift, and go to state 77
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    $default  reduce using rule 34 (expr)
+
+
+state 93
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   35     | expr LT expr .
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    LT  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    GE  error (nonassociative)
+
+    $default  reduce using rule 35 (expr)
+
+
+state 94
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   36     | expr GT expr .
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    LT  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    GE  error (nonassociative)
+
+    $default  reduce using rule 36 (expr)
+
+
+state 95
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+   40     | expr LE expr .
+
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    LT  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    GE  error (nonassociative)
+
+    $default  reduce using rule 40 (expr)
+
+
+state 96
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   39     | expr GE expr .
+   40     | expr . LE expr
+
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    LT  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    GE  error (nonassociative)
+
+    $default  reduce using rule 39 (expr)
+
+
+state 97
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   37     | expr EQ expr .
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    $default  reduce using rule 37 (expr)
+
+
+state 98
+
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   38     | expr NEQ expr .
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    EQ   shift, and go to state 78
+    NEQ  shift, and go to state 79
+
+    $default  reduce using rule 38 (expr)
+
+
+state 99
+
+   23 OutputStmt: WRITE '(' expr ')' ';' .
+
+    $default  reduce using rule 23 (OutputStmt)
+
+
+state 100
+
+   25 Ifstmt: IF '(' expr ')' THEN . Slist ELSE Slist ENDIF ';'
+   26       | IF '(' expr ')' THEN . Slist ENDIF ';'
+
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 22
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Slist       go to state 103
+    Stmt        go to state 27
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 101
+
+   27 Whilestmt: WHILE '(' expr ')' DO . Slist ENDWHILE ';'
+
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 22
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Slist       go to state 104
+    Stmt        go to state 27
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 102
+
+   27 Whilestmt: WHILE '(' expr . ')' DO Slist ENDWHILE ';'
+   28          | DO Slist WHILE '(' expr . ')' ENDWHILE ';'
+   31 expr: expr . PLUS expr
+   32     | expr . MINUS expr
+   33     | expr . MUL expr
+   34     | expr . DIV expr
+   35     | expr . LT expr
+   36     | expr . GT expr
+   37     | expr . EQ expr
+   38     | expr . NEQ expr
+   39     | expr . GE expr
+   40     | expr . LE expr
+
+    PLUS   shift, and go to state 70
+    MINUS  shift, and go to state 71
+    MUL    shift, and go to state 72
+    DIV    shift, and go to state 73
+    LT     shift, and go to state 74
+    GT     shift, and go to state 75
+    LE     shift, and go to state 76
+    GE     shift, and go to state 77
+    EQ     shift, and go to state 78
+    NEQ    shift, and go to state 79
+    ')'    shift, and go to state 105
+
+
+state 103
+
+   13 Slist: Slist . Stmt
+   25 Ifstmt: IF '(' expr ')' THEN Slist . ELSE Slist ENDIF ';'
+   26       | IF '(' expr ')' THEN Slist . ENDIF ';'
+
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    ELSE      shift, and go to state 106
+    WHILE     shift, and go to state 22
+    ENDIF     shift, and go to state 107
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Stmt        go to state 50
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 104
+
+   13 Slist: Slist . Stmt
+   27 Whilestmt: WHILE '(' expr ')' DO Slist . ENDWHILE ';'
+
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 22
+    ENDWHILE  shift, and go to state 108
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Stmt        go to state 50
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 105
+
+   27 Whilestmt: WHILE '(' expr ')' . DO Slist ENDWHILE ';'
+   28          | DO Slist WHILE '(' expr ')' . ENDWHILE ';'
+
+    ENDWHILE  shift, and go to state 109
+    DO        shift, and go to state 101
+
+
+state 106
+
+   25 Ifstmt: IF '(' expr ')' THEN Slist ELSE . Slist ENDIF ';'
+
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 22
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Slist       go to state 110
+    Stmt        go to state 27
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 107
+
+   26 Ifstmt: IF '(' expr ')' THEN Slist ENDIF . ';'
+
+    ';'  shift, and go to state 111
+
+
+state 108
+
+   27 Whilestmt: WHILE '(' expr ')' DO Slist ENDWHILE . ';'
+
+    ';'  shift, and go to state 112
+
+
+state 109
+
+   28 Whilestmt: DO Slist WHILE '(' expr ')' ENDWHILE . ';'
+
+    ';'  shift, and go to state 113
+
+
+state 110
+
+   13 Slist: Slist . Stmt
+   25 Ifstmt: IF '(' expr ')' THEN Slist ELSE Slist . ENDIF ';'
+
+    READ      shift, and go to state 18
+    WRITE     shift, and go to state 19
+    VAR       shift, and go to state 20
+    IF        shift, and go to state 21
+    WHILE     shift, and go to state 22
+    ENDIF     shift, and go to state 114
+    DO        shift, and go to state 23
+    BREAK     shift, and go to state 24
+    CONTINUE  shift, and go to state 25
+
+    Stmt        go to state 50
+    InputStmt   go to state 28
+    OutputStmt  go to state 29
+    AsgStmt     go to state 30
+    Ifstmt      go to state 31
+    Whilestmt   go to state 32
+    Breakstmt   go to state 33
+    Contstmt    go to state 34
+    id          go to state 35
+
+
+state 111
+
+   26 Ifstmt: IF '(' expr ')' THEN Slist ENDIF ';' .
+
+    $default  reduce using rule 26 (Ifstmt)
+
+
+state 112
+
+   27 Whilestmt: WHILE '(' expr ')' DO Slist ENDWHILE ';' .
+
+    $default  reduce using rule 27 (Whilestmt)
+
+
+state 113
+
+   28 Whilestmt: DO Slist WHILE '(' expr ')' ENDWHILE ';' .
+
+    $default  reduce using rule 28 (Whilestmt)
+
+
+state 114
+
+   25 Ifstmt: IF '(' expr ')' THEN Slist ELSE Slist ENDIF . ';'
+
+    ';'  shift, and go to state 115
+
+
+state 115
+
+   25 Ifstmt: IF '(' expr ')' THEN Slist ELSE Slist ENDIF ';' .
+
+    $default  reduce using rule 25 (Ifstmt)
